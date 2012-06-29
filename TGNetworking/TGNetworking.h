@@ -6,8 +6,4 @@
 //  Copyright (c) 2012 TokenGnome. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
-@interface TGNetworking : NSObject
-
-@end
+#import <TGNetworking/TGHTTPClient.h>

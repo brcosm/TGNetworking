@@ -8,15 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		6836ABF0159D552C00708399 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6836ABEF159D552C00708399 /* Foundation.framework */; };
-		6836ABF6159D552C00708399 /* TGNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 6836ABF5159D552C00708399 /* TGNetworking.m */; };
+		6836ABFE159D561800708399 /* TGHTTPClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 6836ABFC159D561800708399 /* TGHTTPClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6836ABFF159D561800708399 /* TGHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6836ABFD159D561800708399 /* TGHTTPClient.m */; };
+		68A57B3D159D591E00E24692 /* TGNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 6836ABF4159D552C00708399 /* TGNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		6836ABEC159D552C00708399 /* libTGNetworking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTGNetworking.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6836ABEF159D552C00708399 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		6836ABF3159D552C00708399 /* TGNetworking-Prefix.pch */ = {isa = PBXFileReference; path = "TGNetworking-Prefix.pch"; sourceTree = "<group>"; };
-		6836ABF4159D552C00708399 /* TGNetworking.h */ = {isa = PBXFileReference; path = TGNetworking.h; sourceTree = "<group>"; };
-		6836ABF5159D552C00708399 /* TGNetworking.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TGNetworking.m; sourceTree = "<group>"; };
+		6836ABF3159D552C00708399 /* TGNetworking-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TGNetworking-Prefix.pch"; sourceTree = "<group>"; };
+		6836ABF4159D552C00708399 /* TGNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TGNetworking.h; sourceTree = "<group>"; };
+		6836ABFC159D561800708399 /* TGHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGHTTPClient.h; sourceTree = "<group>"; };
+		6836ABFD159D561800708399 /* TGHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGHTTPClient.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +63,8 @@
 			isa = PBXGroup;
 			children = (
 				6836ABF4159D552C00708399 /* TGNetworking.h */,
-				6836ABF5159D552C00708399 /* TGNetworking.m */,
+				6836ABFC159D561800708399 /* TGHTTPClient.h */,
+				6836ABFD159D561800708399 /* TGHTTPClient.m */,
 				6836ABF2159D552C00708399 /* Supporting Files */,
 			);
 			path = TGNetworking;
@@ -81,6 +85,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6836ABFE159D561800708399 /* TGHTTPClient.h in Headers */,
+				68A57B3D159D591E00E24692 /* TGNetworking.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,7 +141,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6836ABF6159D552C00708399 /* TGNetworking.m in Sources */,
+				6836ABFF159D561800708399 /* TGHTTPClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,6 +168,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				PUBLIC_HEADERS_FOLDER_PATH = "include/$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -179,6 +186,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				PUBLIC_HEADERS_FOLDER_PATH = "include/$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -227,6 +235,7 @@
 				6836ABFB159D552C00708399 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
