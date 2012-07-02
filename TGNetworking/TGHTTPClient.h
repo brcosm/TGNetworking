@@ -9,8 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-typedef void (^JSONResponseHandler)(id, NSError *);
-typedef void (^ImageResponseHandler)(UIImage *, NSError *);
+typedef void (^ResourceResponseHandler)(id, NSError *);
 
 @interface TGHTTPClient : NSObject
 
@@ -19,8 +18,10 @@ typedef void (^ImageResponseHandler)(UIImage *, NSError *);
 
 - (id)initWithHostName:(NSString *)hostName port:(NSString *)port;
 
-- (void)enqueueJSONRequest:(NSURLRequest *)request callback:(JSONResponseHandler)block;
+- (void)getResourceAtURL:(NSURL *)url callback:(ResourceResponseHandler)block;
 
-- (void)enqueueImageRequest:(NSURLRequest *)request callback:(ImageResponseHandler)block;
+- (void)getResourceAtPath:(NSString *)path callback:(ResourceResponseHandler)block;
+
+- (void)postData:(NSData *)data contentType:(NSString *)mimeType toURL:(NSURL *)url callback:(ResourceResponseHandler)block;
 
 @end
