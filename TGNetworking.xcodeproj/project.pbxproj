@@ -11,6 +11,8 @@
 		6836ABFE159D561800708399 /* TGHTTPClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 6836ABFC159D561800708399 /* TGHTTPClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6836ABFF159D561800708399 /* TGHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 6836ABFD159D561800708399 /* TGHTTPClient.m */; };
 		68A57B3D159D591E00E24692 /* TGNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 6836ABF4159D552C00708399 /* TGNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		68FAAF4515A2A53100CF8D03 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 68FAAF4315A2A53100CF8D03 /* Reachability.h */; };
+		68FAAF4615A2A53100CF8D03 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 68FAAF4415A2A53100CF8D03 /* Reachability.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,8 @@
 		6836ABF4159D552C00708399 /* TGNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TGNetworking.h; sourceTree = "<group>"; };
 		6836ABFC159D561800708399 /* TGHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGHTTPClient.h; sourceTree = "<group>"; };
 		6836ABFD159D561800708399 /* TGHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGHTTPClient.m; sourceTree = "<group>"; };
+		68FAAF4315A2A53100CF8D03 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		68FAAF4415A2A53100CF8D03 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +66,8 @@
 		6836ABF1159D552C00708399 /* TGNetworking */ = {
 			isa = PBXGroup;
 			children = (
+				68FAAF4315A2A53100CF8D03 /* Reachability.h */,
+				68FAAF4415A2A53100CF8D03 /* Reachability.m */,
 				6836ABF4159D552C00708399 /* TGNetworking.h */,
 				6836ABFC159D561800708399 /* TGHTTPClient.h */,
 				6836ABFD159D561800708399 /* TGHTTPClient.m */,
@@ -87,6 +93,7 @@
 			files = (
 				6836ABFE159D561800708399 /* TGHTTPClient.h in Headers */,
 				68A57B3D159D591E00E24692 /* TGNetworking.h in Headers */,
+				68FAAF4515A2A53100CF8D03 /* Reachability.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,6 +149,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6836ABFF159D561800708399 /* TGHTTPClient.m in Sources */,
+				68FAAF4615A2A53100CF8D03 /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

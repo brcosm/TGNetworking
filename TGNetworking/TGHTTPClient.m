@@ -7,6 +7,7 @@
 //
 
 #import "TGHTTPClient.h"
+#import "Reachability.h"
 
 static NSOperationQueue *_sharedQueue;
 typedef void (^ResponseHandler)(NSURLResponse *, NSData *, NSError *);
