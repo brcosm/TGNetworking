@@ -10,12 +10,16 @@
 #import "Reachability.h"
 
 static NSOperationQueue *_sharedQueue;
+static Reachability *_reachability;
 typedef void (^ResponseHandler)(NSURLResponse *, NSData *, NSError *);
 
-@implementation TGHTTPClient
+@implementation TGHTTPClient {
+    NSMutableArray *queuedRequests;
+}
 
 @synthesize hostName = _hostName;
 @synthesize port = _port;
+@synthesize isSecure;
 
 + (id)buildObjectWith:(NSData *)data response:(NSHTTPURLResponse *)response {
     NSError *error;
@@ -39,31 +43,49 @@ typedef void (^ResponseHandler)(NSURLResponse *, NSData *, NSError *);
     if (self) {
         if (!_sharedQueue) {
             static dispatch_once_t onceToken;
-            dispatch_once(&onceToken, ^{ _sharedQueue = [[NSOperationQueue alloc] init]; });
-            _sharedQueue.maxConcurrentOperationCount = 2;
+            dispatch_once(&onceToken, ^{ 
+                _sharedQueue = [[NSOperationQueue alloc] init]; 
+                _sharedQueue.maxConcurrentOperationCount = 2;
+            });
         }
+        if (!_reachability) {
+            static dispatch_once_t reachToken;
+            dispatch_once(&reachToken, ^{ 
+                _reachability = [Reachability reachabilityForInternetConnection]; 
+                [_reachability startNotifier];
+            });
+        }
+        queuedRequests = [NSMutableArray array];
+        [[NSNotificationCenter defaultCenter] addObserver:self 
+                                                 selector:@selector(reachabilityChanged) 
+                                                     name:kReachabilityChangedNotification 
+                                                   object:nil];
         _hostName = hostName;
         _port = port;
+        self.isSecure = YES;
     }
     return self;
 }
 
 - (void)enqueueRequest:(NSURLRequest *)request callback:(ResourceResponseHandler)block {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     // Get a ref to the caller queue for later callback
     dispatch_queue_t callerQueue = dispatch_get_current_queue();
     
     [NSURLConnection sendAsynchronousRequest:request queue:_sharedQueue completionHandler:^(NSURLResponse *resp, NSData *data, NSError *err) {
+        // Probably should have some sort of atomic operation here.  Multiple clients could be mucking with this.
+        if (_sharedQueue.operationCount <= 1) [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         
         // Connection error occurred
         if (err) {
-            dispatch_async(callerQueue, ^() { block(nil, err); });
+            // Try again once the reachability has changed
+            [queuedRequests addObject:[NSDictionary dictionaryWithObjectsAndKeys:request, @"request", [block copy], @"block", nil]];
             return;
         }
         
-        NSHTTPURLResponse *httpResp = (NSHTTPURLResponse *)resp;
-        
         // Check for HTTP Status code issues
-        if (httpResp.statusCode != 200 && httpResp.statusCode != 304) {
+        NSHTTPURLResponse *httpResp = (NSHTTPURLResponse *)resp;
+        if (httpResp.statusCode != 200 && httpResp.statusCode != 304 && httpResp.statusCode != 204) {
             NSError *httpErr = [NSError errorWithDomain:NSURLErrorDomain code:httpResp.statusCode userInfo:httpResp.allHeaderFields];
             dispatch_async(callerQueue, ^{block(nil, httpErr);});
             return;
@@ -78,7 +100,6 @@ typedef void (^ResponseHandler)(NSURLResponse *, NSData *, NSError *);
     }];
 }
 
-
 - (void)getResourceAtURL:(NSURL *)url callback:(ResourceResponseHandler)block {
     // Create the HTTP GET request
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -87,7 +108,10 @@ typedef void (^ResponseHandler)(NSURLResponse *, NSData *, NSError *);
 }
 
 - (void)getResourceAtPath:(NSString *)path callback:(ResourceResponseHandler)block {
-    NSURL *requestURL = [NSURL URLWithString:[[NSString stringWithFormat:@"http://%@:%@", self.hostName, self.port] stringByAppendingPathComponent:path]];
+    NSString *protocol = self.isSecure ? @"https" : @"http";
+    NSString *reqStr = [NSString stringWithFormat:@"%@://%@", protocol, self.hostName];
+    if (self.port) reqStr = [reqStr stringByAppendingFormat:@":%@", self.port];
+    NSURL *requestURL = [NSURL URLWithString:[reqStr stringByAppendingPathComponent:path]];
     [self getResourceAtURL:requestURL callback:block];
 }
 
@@ -98,6 +122,18 @@ typedef void (^ResponseHandler)(NSURLResponse *, NSData *, NSError *);
     [request setValue:[NSString stringWithFormat:@"%d", [data length]] forHTTPHeaderField:@"Content-Type"];
     [request setHTTPBody:data];
     [self enqueueRequest:request callback:block];
+}
+
+- (void)reachabilityChanged {
+    NSArray *requests = [NSArray arrayWithArray:queuedRequests];
+    [queuedRequests removeAllObjects];
+    for (NSDictionary *requestInfo in requests) {
+        [self enqueueRequest:[requestInfo objectForKey:@"request"] callback:[requestInfo objectForKey:@"block"]];
+    }
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

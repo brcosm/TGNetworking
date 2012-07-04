@@ -5,6 +5,7 @@
 //  Created by Brandon Smith on 7/2/12.
 //  Copyright (c) 2012 TokenGnome. All rights reserved.
 //
+//  Very slight modification of Tommy Millions version: https://github.com/tonymillion/Reachability
 
 #import <Foundation/Foundation.h>
 #import <SystemConfiguration/SystemConfiguration.h>

@@ -15,6 +15,7 @@ typedef void (^ResourceResponseHandler)(id, NSError *);
 
 @property (nonatomic, readonly) NSString *hostName;
 @property (nonatomic, readonly) NSString *port;
+@property (nonatomic, assign)   BOOL isSecure;
 
 - (id)initWithHostName:(NSString *)hostName port:(NSString *)port;
 
