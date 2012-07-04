@@ -119,8 +119,24 @@ typedef void (^ResponseHandler)(NSURLResponse *, NSData *, NSError *);
     // Create the HTTP POST request
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"POST"];
-    [request setValue:[NSString stringWithFormat:@"%d", [data length]] forHTTPHeaderField:@"Content-Type"];
+    [request setValue:mimeType forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[NSString stringWithFormat:@"%d", [data length]] forHTTPHeaderField:@"Content-Length"];
     [request setHTTPBody:data];
+    [self enqueueRequest:request callback:block];
+}
+
+- (void)putData:(NSData *)data contentType:(NSString *)mimeType toURL:(NSURL *)url callback:(ResourceResponseHandler)block {
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"PUT"];
+    [request setValue:mimeType forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[NSString stringWithFormat:@"%d", [data length]] forHTTPHeaderField:@"Content-Length"];
+    [request setHTTPBody:data];
+    [self enqueueRequest:request callback:block];
+}
+
+- (void)deleteResourceAtURL:(NSURL *)url callback:(ResourceResponseHandler)block {
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"DELETE"];
     [self enqueueRequest:request callback:block];
 }
 

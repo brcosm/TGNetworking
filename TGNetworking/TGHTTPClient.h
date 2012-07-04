@@ -25,4 +25,8 @@ typedef void (^ResourceResponseHandler)(id, NSError *);
 
 - (void)postData:(NSData *)data contentType:(NSString *)mimeType toURL:(NSURL *)url callback:(ResourceResponseHandler)block;
 
+- (void)putData:(NSData *)data contentType:(NSString *)mimeType toURL:(NSURL *)url callback:(ResourceResponseHandler)block;
+
+- (void)deleteResourceAtURL:(NSURL *)url callback:(ResourceResponseHandler)block;
+
 @end
