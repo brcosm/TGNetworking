@@ -19,6 +19,8 @@ typedef void (^ResourceResponseHandler)(id, NSError *);
 
 - (id)initWithHostName:(NSString *)hostName port:(NSString *)port;
 
+- (void)enqueRequest:(NSURLRequest *) callback:(ResourceResponseHandler)block;
+
 - (void)getResourceAtURL:(NSURL *)url callback:(ResourceResponseHandler)block;
 
 - (void)getResourceAtPath:(NSString *)path callback:(ResourceResponseHandler)block;

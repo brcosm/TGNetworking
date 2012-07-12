@@ -22,7 +22,7 @@ Static library for simple iOS http networking.  Currently a work in progress as 
 ## Adding this library as a submodule
 
 1. cd into your project's repository
-2. git add submodule git://github.com/brcosm/TGNetworking.git
+2. git submodule add git://github.com/brcosm/TGNetworking.git
 3. File > add the .xcodeproj file to your project in Xcode
 4. Targets > {Your target} > Build Phases > Target Dependencies > Add 
         
